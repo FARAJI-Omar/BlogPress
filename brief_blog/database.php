@@ -17,6 +17,4 @@ catch(mysqli_sql_exception){
     echo '<h2 class="cnxerror">Connection error!</h2>';
     exit();
 }
-
-
 ?>
