@@ -2,10 +2,7 @@ const articles = document.querySelector('.articles');
 const createBtn = document.querySelector('.createBtn');
 const closeBtn = document.querySelector('#close');
 const createArticleBox = document.querySelector('.createArticleBox');
-const boxContent = document.querySelector('.boxContent'); 
-const overlay = document.querySelector('.overlay');
-
-
+const boxContent = document.querySelector('.boxContent');
 
 
 articles.addEventListener('click', ()=>{
@@ -20,9 +17,13 @@ createBtn.addEventListener('click', () => {
 
 closeBtn.addEventListener('click', () => {
     createArticleBox.style.display = "none";
-    overlay.style.display = 'none';
 
 });
+
+
+
+
+
 
 
 

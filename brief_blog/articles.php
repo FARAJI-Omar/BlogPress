@@ -78,7 +78,6 @@ if (isset($_POST["create"])) {
     </div>
 
     <div class="content">
-        <!-- <button class="createBtn">Create Article</button> -->
         <div id="createArticleBox" class="createArticleBox">
             <div class="boxContent">
                 <button id="close">X</button>
@@ -115,13 +114,17 @@ if (isset($_POST["create"])) {
                     echo '<div class="content1">' . htmlspecialchars($row['content']) . '</div>';
                     echo '<div class="date1">Created at: ' . htmlspecialchars($row['created_at']) . '</div>';
                     echo '<div class="buttons">';
-                    // include("delete.php");
                     echo '<form method="POST" action="delete.php">';
                     echo '<input type="hidden" name="article_id" value="' . $row['article_id'] . '">';
                     echo '<button type="submit" name="delete" class="deletebtn">Delete</button>';
-
-                    echo '<button class="editbtn">Edit</button>';
                     echo '</form>';
+
+                    echo '<form method="POST" action="edit.php">';
+                    echo '<input type="hidden" name="article_id" value="' . $row['article_id'] . '">';
+                    echo '<button type="submit" name="edit" class="editbtn">Edit</button>';
+                    echo '</form>';
+
+
                     echo '</div>';
                     echo '</div>';
                 }
