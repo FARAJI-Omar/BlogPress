@@ -1,6 +1,12 @@
 <?php 
     include("database.php");
     session_start();
+
+    // Redirect to signin.php if no user is logged in
+    if (!isset($_SESSION['username'])) {
+        header("location: signin.php");
+        exit();
+    }
 ?>
 
 

@@ -2,6 +2,12 @@
 include("database.php");
 session_start();
 
+  // Redirect to signin.php if no user is logged in
+  if (!isset($_SESSION['username'])) {
+    header("location: signin.php");
+    exit();
+}
+
 if (isset($_POST["create"])) {
     
     $title = htmlspecialchars(trim($_POST["arttitle"]));
@@ -67,11 +73,12 @@ if (isset($_POST["create"])) {
        <img src="images/user icon2.png" alt="">
        <div class="sessionUser"> <?php echo $_SESSION['username']; ?> </div>
        <div class="articles"><h2>Articles</h2></div>
-       <div class="stats"><h2><Str>Statistics</Str></h2></div>
+       <div class="createBtn"><h2>Create Article</h2></div>
+       <div class="stats"><h2>Statistics</h2></div>
     </div>
 
     <div class="content">
-        <button class="createBtn">Create Article</button>
+        <!-- <button class="createBtn">Create Article</button> -->
         <div id="createArticleBox" class="createArticleBox">
             <div class="boxContent">
                 <button id="close">X</button>
@@ -93,7 +100,7 @@ if (isset($_POST["create"])) {
         <?php
             // Fetch articles created by the logged-in user
             $user_id = $_SESSION['username'];
-            $query = "SELECT title, username, created_at FROM articles WHERE username = ?";
+            $query = "SELECT article_id, title, content, created_at FROM articles WHERE username = ?";
             $stmt = $conn->prepare($query);
 
             if ($stmt) {
@@ -104,9 +111,18 @@ if (isset($_POST["create"])) {
                 // Loop through the result and display each article
                 while ($row = $result->fetch_assoc()) {
                     echo '<div class="created_article">';
-                    echo '<div class="title1">Title: ' . htmlspecialchars($row['title']) . '</div>';
-                    echo '<div class="author1">Author: ' . htmlspecialchars($row['username']) . '</div>';
+                    echo '<div class="title1">' . htmlspecialchars($row['title']) . '</div>';
+                    echo '<div class="content1">' . htmlspecialchars($row['content']) . '</div>';
                     echo '<div class="date1">Created at: ' . htmlspecialchars($row['created_at']) . '</div>';
+                    echo '<div class="buttons">';
+                    // include("delete.php");
+                    echo '<form method="POST" action="delete.php">';
+                    echo '<input type="hidden" name="article_id" value="' . $row['article_id'] . '">';
+                    echo '<button type="submit" name="delete" class="deletebtn">Delete</button>';
+
+                    echo '<button class="editbtn">Edit</button>';
+                    echo '</form>';
+                    echo '</div>';
                     echo '</div>';
                 }
 

@@ -141,7 +141,7 @@ body{
 
 .sidebar{
     width: 15%;
-    height: 100vh;
+    height: 200vh;
     background-color: #067bf8;
     display: flex;
     flex-direction: column;
@@ -165,11 +165,20 @@ margin-top: 15%;
 }
 
 .sidebar .stats{
+    margin-top: 40%;
+    color: white;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 15px;
+}
+.sidebar .createBtn{
     margin-top: 20%;
     color: white;
     font-family: monospace;
     font-weight: bold;
     font-size: 15px;
+    text-align: center;
+    cursor: pointer;
 }
 
 .sessionUser{
@@ -179,13 +188,14 @@ margin-top: 15%;
     font-size: 15px;
 }   
 
+
+
 .content{
     display: flex;
     width: 70%;
     /* border: #067bf8 solid;
     border-top: none; */
 }
-
 
 .boxContent{
     display: flex;
@@ -197,6 +207,8 @@ margin-top: 15%;
     border-radius: 10px;
     margin-left: 20%;
     margin-top: 5%;
+    position: absolute;
+    background-color: #eeebeb;
 
 }
 .content form{
@@ -207,10 +219,10 @@ margin-top: 15%;
     align-items: center;
 }
 
-.createBtn{
+/* .createBtn{
     height: 40px;
     width: 100px;
-}
+} */
 
 #close{
     width: 30px;
@@ -275,7 +287,7 @@ margin-top: 15%;
   }
 
   
-.createBtn{
+/* .createBtn{
     width: 10%;
     height: 38px;
     background-color: #067bf8;
@@ -284,10 +296,8 @@ margin-top: 15%;
     border-radius: 10px;
     cursor: pointer;
     border: #0360c4 solid 2px;
-    position: relative;
-    top: 5%;
-    left: 90%;
-}
+   
+} */
 
 
 .created_article{
@@ -296,29 +306,63 @@ margin-top: 15%;
     padding: 5%;
     background-color: #eeebeb;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20%;
     margin-bottom: 5%;
-    width: 80%;
+    width: 90%;
 }
 
 .createdart{
     width: 800px;
     margin-top: 5%;
-    margin-left: -5%;
+    margin-left: 5%;
 }
 
-.title1 , .author1{
+.title1{
     font-family: Arial, Helvetica, sans-serif;
-    width: 33%;
     font-size: 16px;
     word-spacing: 3px;
     font-weight: bold;
+    text-decoration: underline;
 }
-.date1{
+
+.content1{
+    margin-top: 2%;
     font-family: Arial, Helvetica, sans-serif;
-    width: 50%;
+    width: 90%;
+    font-size: 15px;
+    word-spacing: 3px;
+    word-wrap: break-word; 
+    word-break: break-word; 
+    white-space: normal; 
+}
+
+.date1{
+    margin-top: 5%;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;
     text-align: right;
     font-style: italic;
+}
+
+.buttons{
+    display: flex;
+    gap: 2%;
+}
+
+.deletebtn{
+    border: rgb(166, 0, 0) solid 2px;
+    background-color: rgb(255, 48, 48);
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.editbtn{
+    border: rgb(1, 125, 36) solid 2px;
+    background-color: rgb(25, 251, 40);
+    border-radius: 5px;
+    padding: 5px;
+    width: 50px;
+    cursor: pointer;
 }
