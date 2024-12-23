@@ -61,7 +61,7 @@
         } 
     ?> 
 
-<!-- <?php 
+<?php 
     $username_error = $signin_error = '';
 
     if (isset($_POST['signin'])) {
@@ -99,11 +99,9 @@
                 $user = $result->fetch_assoc();
 
                 if (password_verify($password, $user['password'])) {
-                    // echo "3.$user['username']";
                     session_start();
 
                     $_SESSION['username'] = $user['username'];
-                    // echo "4.$_SESSION['username']";
 
                     header("Location: dashboard.php");
                     exit();
@@ -119,7 +117,7 @@
 
         mysqli_close($conn);
     }
-?> -->
+?> 
 
 
     <div class="signin">

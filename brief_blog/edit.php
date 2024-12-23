@@ -2,7 +2,6 @@
 include("database.php");
 session_start();
 
-// Redirect to signin.php if no user is logged in
 if (!isset($_SESSION['username'])) {
     header("location: signin.php");
     exit();
@@ -36,7 +35,6 @@ $user_id = $_SESSION['username'];
             exit();
         }
     } elseif (isset($_POST['update'])) {
-        // Update article details
         $article_id = $_POST['article_id'];
         $new_title = htmlspecialchars(trim($_POST['arttitle']));
         $new_content = htmlspecialchars(trim($_POST['artcontent']));

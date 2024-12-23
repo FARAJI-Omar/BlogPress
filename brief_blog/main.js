@@ -24,13 +24,6 @@ closeBtn.addEventListener('click', () => {
 });
 
 
-const likeButton = document.getElementById('likeButton');
-const likeImage = document.getElementById('likebtn');
-
-  likeButton.addEventListener('click', () => {
-    likeImage.style.backgroundColor = 'red';
-  });
-
 
 
 

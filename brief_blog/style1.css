@@ -602,7 +602,6 @@ height: 300px;
   }
 
   .container{
-    /* height: 80vh; */
     margin-top: 3%;
     display: flex;
     flex-wrap: wrap;
@@ -616,7 +615,6 @@ height: 300px;
   
 
 
-  /* styles.css */
   .blog-container {
     width: 100%;
     max-width: 1200px;

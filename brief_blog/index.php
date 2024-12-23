@@ -8,7 +8,7 @@
         header("location: signin.php");
         exit();
     }
-    ?>
+    ?> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +37,7 @@
 
     <main class="container">
         <?php
-        $query = "SELECT article_id, created_at, title, content, username FROM articles";
+        $query = "SELECT article_id, created_at, title, content, username, views FROM articles ORDER BY views DESC";
         $resu = mysqli_query($conn, $query);
         ?>
 
@@ -53,8 +53,11 @@
       
       <p class="blog-description">
           <?php echo htmlspecialchars(substr($article['content'], 0, 50)) . ' ...'; ?>
-        </p>
-        <p class="blog-date"><?php echo htmlspecialchars($article['created_at'])?></p>
+        </p> 
+        <p class="blog-like"><?php echo ($article['views'])?> likes</p>
+
+        <p class="blog-date"><?php echo htmlspecialchars($article['created_at'])?></p> 
+       
 
       <a href="readmore.php?id=<?php echo $article['article_id']; ?>" class="read-more-button">Read More</a>
     </div>
