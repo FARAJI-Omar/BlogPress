@@ -16,7 +16,6 @@ if (isset($_POST["create"])) {
 
    
     if (!empty($title) && !empty($content)) {
-        // Prepare the SQL query to insert the article into the database
         $query = "INSERT INTO articles (title, content, username) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($query);
 
@@ -26,11 +25,8 @@ if (isset($_POST["create"])) {
 
             // Execute the query
             if ($stmt->execute()) {
-              // Redirect to avoid form resubmission
               header("Location: articles.php"); 
-              exit();
-            } else {
-                echo "<script>alert('Error creating article: " . $stmt->error . "');</script>";
+              exit(); 
             }
 
             // Close the statement
@@ -38,8 +34,6 @@ if (isset($_POST["create"])) {
         } else {
             echo "<script>alert(' Error. Please try again later.');</script>";
         }
-    } else {
-        echo "<script>alert('All fields are required.');</script>";
     }
 }
 
@@ -60,13 +54,14 @@ if (isset($_POST["create"])) {
             include("header.php");
         ?>
     </div>
+
     <div>
         <form action="dashboard.php" method="POST">
             <input type="submit" name="logout" value="log Out" class="logout">
         </form>
     </div>
-</header>
 
+</header>
 
 <div class="mainView">
     <div class="sidebar">
@@ -84,7 +79,7 @@ if (isset($_POST["create"])) {
 
                 <h2>New Article</h2>
 
-                    <form id="articleForm" action="articles.php" method="post">
+                    <form id="articleForm" action="articles.php" method="POST">
                     <label for="articleTitle" class="artlabel">Title:</label>
                     <input type="text" id="articleTitle" name="arttitle" required>
                     <label for="articleContent" class="artlabel">Content:</label>
@@ -146,7 +141,7 @@ if (isset($_POST["create"])) {
 
 <!-- <footer>
     <?php 
-        include("footer.html");
+        include("footer.php");
     ?>
 </footer> -->
 <script src="main.js"></script>

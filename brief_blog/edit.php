@@ -10,7 +10,6 @@ if (!isset($_SESSION['username'])) {
 
 $user_id = $_SESSION['username'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['edit'])) {
         // Fetch article details for editing
         $article_id = $_POST['article_id'];
@@ -27,13 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $article = $result->fetch_assoc();
             } else {
                 echo "<script>alert('Article not found or access denied.');</script>";
-                header("Location: articles.php");
+                header("Location: dashboard.php");
                 exit();
             }
             $stmt->close();
         } else {
             echo "<script>alert('Error fetching article details.');</script>";
-            header("Location: articles.php");
+            header("Location: dashboard.php");
             exit();
         }
     } elseif (isset($_POST['update'])) {
@@ -50,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $update_stmt->bind_param("ssis", $new_title, $new_content, $article_id, $user_id);
 
                 if ($update_stmt->execute()) {
-                    header("Location: articles.php");
+                    header("Location: dashboard.php");
                     exit();
                 } else {
                     echo "<script>alert('Error updating article.');</script>";
@@ -63,10 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<script>alert('Title and content cannot be empty.');</script>";
         }
     }
-} else {
-    header("Location: articles.php");
-    exit();
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -81,20 +77,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include("header.php"); ?>
 </header>
 
-<div class="mainView">
-    <div class="content">
+    <div class="edit_content">
         <h2>Edit Article</h2>
-        <form id="articleForm" action="edit.php" method="post">
+        <form id="editarticleForm" action="edit.php" method="post">  
             <input type="hidden" name="article_id" value="<?php echo $article_id; ?>">
-            <label for="articleTitle" class="artlabel">Title:</label>
-            <input type="text" id="articleTitle" name="arttitle" value="<?php echo htmlspecialchars($article['title'] ?? ''); ?>" required>
-            
-            <label for="articleContent" class="artlabel">Content:</label>
-            <textarea id="articleContent" name="artcontent" rows="4" cols="50" required><?php echo htmlspecialchars($article['content'] ?? ''); ?></textarea>
+                <label for="articleTitle" class="editartlabel">Title:</label>
+                <input type="text" id="articleTitle" name="arttitle" value="<?php echo htmlspecialchars($article['title'] ?? ''); ?>" required>
+                <label for="articleContent" class="editartlabel">Content:</label>
+                <textarea id="articleContent" name="artcontent" rows="4" cols="50" required><?php echo htmlspecialchars($article['content'] ?? ''); ?></textarea>
 
-            <input class="artsubmit" type="submit" name="update" value="Update">
+                <div class="editbuttons">
+                    <form action="dashboard.php" method="POST">
+                        <input class="canceledit" type="submit" name="cancel" value="Cancel">
+                    </form>
+                    <input class="editartsubmit" type="submit" name="update" value="Update">
+                </div>
         </form>
     </div>
-</div>
 </body>
 </html>
+
+<?php
+if (isset($_POST['cancel'])) {
+    header("Location: dashboard.php");
+    exit();
+}
+?>
+

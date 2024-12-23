@@ -135,12 +135,14 @@
             <input class="submit" type="submit" name="signin" value="Sign In">
             <br><br>
             <div class="error"><?php echo $signin_error; ?></div>
+            <p>Don't have an account? <a href="signup.php">Create account</a></p>
+
         </form>
     </div>
 
 <footer>
 <?php 
-    include("footer.html");
+    include("footer.php");
 ?>
 </footer>
 

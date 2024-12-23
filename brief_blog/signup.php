@@ -95,12 +95,13 @@
             <input class="submit" type="submit" name="signup" value="Sign Up">
             <br><br>
             <div class="error"><?php echo $signup_error; ?></div>
+            <p>Have an account? <a href="signin.php">Sign in</a></p>
         </form>
     </div>
 
 <footer>
 <?php 
-    include("footer.html");
+    include("footer.php");
 ?>
 </footer>
 

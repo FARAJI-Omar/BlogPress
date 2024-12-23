@@ -19,7 +19,7 @@ if (isset($_POST["delete"])) {
         $stmt->bind_param("is", $article_id, $user_id);
 
         if ($stmt->execute()) {
-            header("Location: articles.php");
+            header("Location: dashboard.php");
             exit();
         } else {
             echo "<script>alert('Error deleting article: " . $stmt->error . "');</script>";

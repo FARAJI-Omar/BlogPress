@@ -3,9 +3,34 @@
 
     $id = $_GET['id'];
 
+    $incrementViewsQuery = "UPDATE articles SET views = views + 1 WHERE article_id = $id";
+    mysqli_query($conn, $incrementViewsQuery);
 
-    $query = "UPDATE articles SET views = views + 1 where article_id = $id";
+    if (isset($_POST['like'])) {
+      $query = "UPDATE articles SET likes = likes + 1 WHERE article_id = $id";
+      mysqli_query($conn, $query);
+      
+      
+  }
+        
+    $query = "SELECT article_id, created_at, title, content, views, likes, username FROM articles WHERE article_id = $id";
     mysqli_query($conn, $query);
+ 
+   // Handle the comment submission
+   if (isset($_POST['comment_user']) && isset($_POST['comment_content'])) {
+    $comment_username = mysqli_real_escape_string($conn, $_POST['comment_user']);
+    $comment_content = mysqli_real_escape_string($conn, $_POST['comment_content']);
+
+    $query = "INSERT INTO comments (article_id, comment_username, content) 
+              VALUES ('$id', '$comment_username', '$comment_content')";
+    if (!mysqli_query($conn, $query)) {
+      die("Error inserting comment: " . mysqli_error($conn));
+    }
+  }
+
+  // Fetch the comments for the article
+  $comments_query = "SELECT comment_username, content, created_at FROM comments WHERE article_id = $id ORDER BY created_at DESC";
+  $comments_result = mysqli_query($conn, $comments_query);
 
 ?>
 
@@ -52,34 +77,46 @@
     </p>
     
     </main>
-    <span class="flex flex-row items-center">
-        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-        </svg>
+      <span class="flex-container">
+        <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+        </svg>        
         <span><?php echo $article['views']; ?> views</span>
-        <svg class="jaime w-5 h-5 ml-2" fill="white" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                    </svg>
-                                    <span id="likeCount"><?php echo $article['likes']; ?> <button id="like">likes</button></span>
+        
+        <span id="likeCount"><?php echo $article['likes']; ?> <button id="like">likes</button></span>
                                     
         </span>
+
+        <form action="readmore.php?id=<?php echo $article['article_id']; ?>" method="POST">
+          <button type="submit" name="like" id="likeButton" class="flex items-center">
+          <img id="likebtn" src="images/like.png" alt="">
+          </button>
+        </form>
+
 
     <!-- Comment Section -->
     <section class="comments-section">
       <h2 class="comments-title">Leave a Comment</h2>
-      <form class="comment-form">
-        <textarea class="comment-input" placeholder="Write your comment..." rows="4" required></textarea>
+
+      <form class="comment-form" method="POST">
+        <label for="comment_user" class="comment_user_label">Username:</label>
+        <input type="text" id="comment_user" name="comment_user" required>
+        <textarea name="comment_content" class="comment-input" placeholder="Write your comment..." rows="5" required></textarea>
         <button type="submit" class="comment-button">Submit Comment</button>
       </form>
+
       <div class="comment-list">
         <h3 class="comment-list-title">Comments</h3>
-        <div class="comment">
-          <p><strong>User1:</strong> Great article! Very informative and well-designed.</p>
-        </div>
-        <div class="comment">
-          <p><strong>User2:</strong> I love the compact layout. It’s modern and easy to read.</p>
-        </div>
+        <?php while ($comment = mysqli_fetch_assoc($comments_result)) { ?>
+          <div class="comment">
+            <p><strong><?php echo htmlspecialchars($comment['comment_username']); ?>:</strong></p>
+            <p><?php echo htmlspecialchars($comment['content']); ?></p>
+            <p class="text-sm text-gray-500"><?php echo htmlspecialchars($comment['created_at']); ?></p>
+          </div>
+          <hr>
+        <?php } ?>
+       
       </div>
     </section>
   </div>
